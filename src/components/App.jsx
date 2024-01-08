@@ -1,26 +1,26 @@
 import React from 'react';
-import Home from './Home/Home';
+import { Route, Routes } from 'react-router-dom';
+import HomePage from 'Pages/HomePage';
+import MovieDetailsPage from 'Pages/MovieDetailsPage';
+import CastPage from 'Pages/CastPage';
+import ReviewsPage from 'Pages/ReviewsPage';
+import MoviesPage from 'Pages/MoviesPage';
 
-const options = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMmM4ZmNlODBkNWY2YWRhNDI2MmIyY2Q0OTQwNTY1MiIsInN1YiI6IjY1NDIzNzExMWFjMjkyMDBlMTE4NGQyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z31pb3WMAG3QsgPH8x9AM27sCQZfGvUnbyhPmGdRJT0` 
-  }
-};
+import Layout from './Layout/Layout';
 
-const searchKeyword = 'dog'; 
-
-fetch(`https://api.themoviedb.org/3/search/movie?query=${searchKeyword}&include_adult=false&language=en-US&page=1`, options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
 const App = () => {
   return (
     <>
-      <div></div>
-      {/* <Api/> */}
-      <Home />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="movies" element={<MoviesPage />} />
+          <Route path="movies/:movieId" element={<MovieDetailsPage />} />
+          <Route path="movies/:movieId/cast" element={<CastPage />} />
+          <Route path="movies/:movieId/reviews" element={<ReviewsPage />} />
+        </Route>
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
     </>
   );
 };

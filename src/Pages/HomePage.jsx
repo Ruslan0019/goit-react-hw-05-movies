@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 
-function Home() {
+function HomePages() {
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
@@ -25,10 +24,6 @@ function Home() {
 
   return (
     <div>
-      <nav>
-        <button>Home</button>
-        <button>Movies</button>
-      </nav>
       <h1>Trending today</h1>
       {responseData ? (
         <ul>
@@ -52,4 +47,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePages;
