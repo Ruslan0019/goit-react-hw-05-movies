@@ -5,8 +5,8 @@ import MovieDetailsPage from 'Pages/MovieDetailsPage';
 import CastPage from 'Pages/CastPage';
 import ReviewsPage from 'Pages/ReviewsPage';
 import MoviesPage from 'Pages/MoviesPage';
-
 import Layout from './Layout/Layout';
+
 
 const App = () => {
   return (

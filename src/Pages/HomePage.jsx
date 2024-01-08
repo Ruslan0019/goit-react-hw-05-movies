@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function HomePages() {
+const HomePages=()=> {
   const [responseData, setResponseData] = useState(null);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ function HomePages() {
         <ul>
           {responseData.results.map(item => (
             <a
-              key={item.id}
-              href={`${item.id}`}
+              id={item.id}
+              href={`movies/${item.id}`}
               style={{
                 display: 'block',
                 marginBottom: 20,

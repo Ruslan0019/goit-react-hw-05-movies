@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CastPage() {
+const  CastPage=()=> {
   return <div>CastPage</div>;
 }
 

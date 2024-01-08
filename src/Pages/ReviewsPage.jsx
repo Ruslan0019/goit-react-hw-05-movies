@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ReviewsPage() {
+const ReviewsPage=()=> {
   return <div>ReviewsPage</div>;
 }
 
