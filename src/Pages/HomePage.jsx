@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const HomePages=()=> {
   const [responseData, setResponseData] = useState(null);
-
+ 
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -21,29 +21,26 @@ const HomePages=()=> {
       .then(response => setResponseData(response))
       .catch(err => console.error(err));
   }, []);
-
   return (
     <div>
-      <h1>Trending today</h1>
-      {responseData ? (
-        <ul>
-          {responseData.results.map(item => (
+    <h1>Trending today</h1>
+    {responseData ? (
+      <ul>
+        {responseData.results.map(item => (
+          <li key={item.id} style={{ marginBottom: 20 }}>
             <a
-              id={item.id}
               href={`movies/${item.id}`}
-              style={{
-                display: 'block',
-                marginBottom: 20,
-              }}
+              style={{ display: 'block' }}
             >
               {item.title ? item.title : item.name}
             </a>
-          ))}
-        </ul>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Loading...</p>
+    )}
+  </div>
   );
 }
 
