@@ -1,5 +1,6 @@
 import fetchMovies from 'api/api';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 const Movies = () => {
@@ -24,12 +25,12 @@ const Movies = () => {
       {movies.length > 0 && (
         <ul>
           {movies.map(movie => (
-            <a id={movie.id}
-            href={`movies/${movie.id}`}
+            <Link key={movie.id}
+            to={`/movies/${movie.id}`}
             style={{
               display: 'block',
               marginBottom: 20,
-            }}>{movie.title}</a>
+            }}>{movie.title}</Link>
           ))}
         </ul>
       )}

@@ -26,9 +26,9 @@ const MovieDetails = () => {
   
   return (
     <div>
-      <div><button>Go back</button></div>
+      <Link to={`/`}><button>Go back</button></Link>
       <div>
-        <div>{poster_path && <img style={{ width: 300 }} src={`${TMDbURL}${poster_path}`} alt="" />}</div>
+        <div>{poster_path ? <img style={{ width: 300 }} src={`${TMDbURL}${poster_path}`} alt="" /> : <img style={{ width: 300 }} src={`https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg`} alt="" /> }</div>
       <div><h1>{title}</h1>
       <p>IMDB {vote_average&&vote_average.toFixed(1)} </p>
       <h2>Overview</h2>
