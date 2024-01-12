@@ -1,28 +1,20 @@
+import { fetchMovieReviews } from 'api/api';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 
 const ReviewsPage = () => {
-  const [reviewsDetails, setResponseData] = useState(null);
+  const [reviewsDetails, setReviewsDetails] = useState(null);
   const { movieId } = useParams();
   useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiMmM4ZmNlODBkNWY2YWRhNDI2MmIyY2Q0OTQwNTY1MiIsInN1YiI6IjY1NDIzNzExMWFjMjkyMDBlMTE4NGQyNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.z31pb3WMAG3QsgPH8x9AM27sCQZfGvUnbyhPmGdRJT0', 
-      },
-    };
-
-    fetch(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`, options)
-      .then(response => response.json())
-      .then(response => setResponseData(response))
-      
+    fetchMovieReviews(movieId)
+      .then(response => setReviewsDetails(response))
       .catch(err => console.error(err));
   }, [movieId]);
-
   return (
     <div>
-      {reviewsDetails && reviewsDetails.results && reviewsDetails.results.length > 0 ? (
+      {reviewsDetails &&
+      reviewsDetails.results &&
+      reviewsDetails.results.length > 0 ? (
         <div>
           {reviewsDetails.results.map(review => (
             <ul key={review.id}>
@@ -33,7 +25,7 @@ const ReviewsPage = () => {
           ))}
         </div>
       ) : (
-        <ul>there are no reviews.</ul>
+        <ul>We don't have any reviews for this movie.</ul>
       )}
     </div>
   );

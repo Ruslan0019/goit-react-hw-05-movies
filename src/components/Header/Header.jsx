@@ -1,24 +1,21 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import {List,Item} from './Styled';
+
+
 
 const Header=()=> {
   return (
     <header>
       <nav>
-        <ul
-        style={{
-          display:'flex',
-          gap:30,
-          listStyleType:"none",
-          
-        }}>
-          <li>
+        <List>
+          <Item>
             <NavLink to="/">Home</NavLink>
-          </li>
+          </Item>
           <li>
             <NavLink to="/movies">Movies</NavLink>
           </li>
-        </ul>
+        </List>
       </nav>
     </header>
   );
