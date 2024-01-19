@@ -3,12 +3,10 @@ import React, { useState, useEffect } from 'react';
 import MovieList from '../components/MovieList/MovieList';
 const HomePages = () => {
   const [responseData, setResponseData] = useState(null);
-  console.log(responseData);
 
   useEffect(() => {
     fetchTrendingMovies()
       .then(response => {
-        console.log(response.results); // Добавьте эту строку
         setResponseData(response);
       })
       .catch(err => console.error(err));
