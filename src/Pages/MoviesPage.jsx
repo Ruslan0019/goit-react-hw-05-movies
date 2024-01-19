@@ -1,18 +1,41 @@
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import MovieList from '../components/MovieList/MovieList';
 import { fetchMovies } from 'api/api';
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const Movies = () => {
+  const location = useLocation();
+
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
 
-  const handleSearch = async () => {
-    const results = await fetchMovies(searchQuery);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const queryFromURL = queryParams.get('query') || '';
+    setSearchQuery(queryFromURL);
+
+    if (queryFromURL) {
+      handleSearch(queryFromURL);
+    }
+  }, [location.search]);
+
+  const handleSearch = async query => {
+    const results = await fetchMovies(query);
     setMovies(results);
+
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set('query', query);
+
+    window.history.pushState(
+      {},
+      '',
+      `${window.location.pathname}?${queryParams.toString()}`
+    );
   };
-  const hendelKeyPress = e => {
+
+  const handleKeyPress = e => {
     if (e.key === 'Enter') {
-      handleSearch();
+      handleSearch(searchQuery);
     }
   };
 
@@ -22,26 +45,11 @@ const Movies = () => {
         type="text"
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
-        onKeyPress={hendelKeyPress}
+        onKeyPress={handleKeyPress}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={() => handleSearch(searchQuery)}>Search</button>
 
-      {movies.length > 0 && (
-        <ul>
-          {movies.map(movie => (
-            <Link
-              key={movie.id}
-              to={`/movies/${movie.id}`}
-              style={{
-                display: 'block',
-                marginBottom: 20,
-              }}
-            >
-              {movie.title}
-            </Link>
-          ))}
-        </ul>
-      )}
+      {movies.length > 0 && <MovieList movies={movies} />}
     </div>
   );
 };

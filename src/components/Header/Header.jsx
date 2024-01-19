@@ -1,10 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {List,Item} from './Styled';
+import { List, Item } from './Header.styled';
 
-
-
-const Header=()=> {
+const Header = () => {
   return (
     <header>
       <nav>
@@ -19,6 +17,6 @@ const Header=()=> {
       </nav>
     </header>
   );
-}
+};
 
 export default Header;

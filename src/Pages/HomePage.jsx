@@ -1,28 +1,24 @@
 import { fetchTrendingMovies } from 'api/api';
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-
+import MovieList from '../components/MovieList/MovieList';
 const HomePages = () => {
   const [responseData, setResponseData] = useState(null);
+  console.log(responseData);
 
   useEffect(() => {
     fetchTrendingMovies()
-      .then(response => setResponseData(response))
+      .then(response => {
+        console.log(response.results); // Добавьте эту строку
+        setResponseData(response);
+      })
       .catch(err => console.error(err));
   }, []);
+
   return (
     <div>
-      <h1>Trending today</h1>
+      <h1>Popular today</h1>
       {responseData ? (
-        <ul>
-          {responseData.results.map(item => (
-            <li key={item.id} style={{ marginBottom: 20 }}>
-              <NavLink to={`movies/${item.id}`} style={{ display: 'block' }}>
-                {item.title ? item.title : item.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+        <MovieList movies={responseData.results} />
       ) : (
         <p>Loading...</p>
       )}
