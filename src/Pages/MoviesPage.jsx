@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import MovieList from '../components/MovieList/MovieList';
 import { fetchMovies } from 'api/api';
@@ -9,6 +9,23 @@ const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [movies, setMovies] = useState([]);
 
+  const handleSearch = useCallback(
+    async query => {
+      const results = await fetchMovies(query);
+      setMovies(results);
+
+      const queryParams = new URLSearchParams(location.search);
+      queryParams.set('query', query);
+
+      window.history.pushState(
+        {},
+        '',
+        `${window.location.pathname}?${queryParams.toString()}`
+      );
+    },
+    [location.search]
+  );
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const queryFromURL = queryParams.get('query') || '';
@@ -17,21 +34,7 @@ const Movies = () => {
     if (queryFromURL) {
       handleSearch(queryFromURL);
     }
-  }, [location.search]);
-
-  const handleSearch = async query => {
-    const results = await fetchMovies(query);
-    setMovies(results);
-
-    const queryParams = new URLSearchParams(location.search);
-    queryParams.set('query', query);
-
-    window.history.pushState(
-      {},
-      '',
-      `${window.location.pathname}?${queryParams.toString()}`
-    );
-  };
+  }, [location.search, handleSearch]);
 
   const handleKeyPress = e => {
     if (e.key === 'Enter') {
