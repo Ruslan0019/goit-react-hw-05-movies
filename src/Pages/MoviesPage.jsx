@@ -10,6 +10,11 @@ const Movies = () => {
     const results = await fetchMovies(searchQuery);
     setMovies(results);
   };
+  const hendelKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div>
@@ -17,6 +22,7 @@ const Movies = () => {
         type="text"
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
+        onKeyPress={hendelKeyPress}
       />
       <button onClick={handleSearch}>Search</button>
 
