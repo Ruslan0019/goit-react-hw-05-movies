@@ -1,4 +1,10 @@
-import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useParams,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { fetchMovieDetails } from 'api/api';
 
@@ -6,7 +12,6 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState({});
   const TMDbURL = 'https://image.tmdb.org/t/p/original';
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMovieDetails(movieId)
@@ -15,14 +20,15 @@ const MovieDetails = () => {
   }, [movieId]);
 
   const { poster_path, title, vote_average, overview, genres } = movieDetails;
-
-  const goBack = () => {
-    navigate(-1);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const handelBack = () => {
+    navigate(state);
   };
-
   return (
     <div>
-      <button onClick={goBack}>Go back</button>
+      <button onClick={handelBack}>Go back</button>
+
       <div>
         <div>
           {poster_path ? (
