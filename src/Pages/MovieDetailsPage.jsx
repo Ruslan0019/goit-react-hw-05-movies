@@ -1,11 +1,5 @@
-import {
-  Link,
-  Outlet,
-  useParams,
-  useNavigate,
-  useLocation,
-} from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
 import { fetchMovieDetails } from 'api/api';
 
 const MovieDetails = () => {
@@ -21,13 +15,11 @@ const MovieDetails = () => {
 
   const { poster_path, title, vote_average, overview, genres } = movieDetails;
   const { state } = useLocation();
-  const navigate = useNavigate();
-  const handelBack = () => {
-    navigate(state);
-  };
+  const backLinkRef = useRef(state?.from || '/');
+
   return (
     <div>
-      <button onClick={handelBack}>Go back</button>
+      <Link to={backLinkRef.current}>Go back</Link>
 
       <div>
         <div>
